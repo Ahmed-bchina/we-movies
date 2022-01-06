@@ -39,6 +39,13 @@ class MoviesController extends AbstractController
         // we take the first movie in the list 
         $top_rated_movie = $top_rated_movies->toArray()['results'][0];
 
+        // get top rated movie videos
+        $top_rated_movie_videos = $httpClient->request('GET', $movie_db_url.'movie/'.$top_rated_movie['id'].'/videos?api_key='.$movie_db_api_key.'&language=fr');
+        if (isset($top_rated_movie_videos->toArray()['results'][0])) {
+            $top_rated_movie['video_key'] = $top_rated_movie_videos->toArray()['results'][0]['key'];
+            $top_rated_movie['video_name'] = $top_rated_movie_videos->toArray()['results'][0]['name'];
+        }
+
         // get the list all cinema genders 
         $genders = $httpClient->request('GET', $movie_db_url.'genre/movie/list?api_key='.$movie_db_api_key.'&language=fr', [
             'query' => [
@@ -49,6 +56,19 @@ class MoviesController extends AbstractController
         if(!isset($movies)) {
             // get movies
             $movies = $httpClient->request('GET', $movie_db_url.'discover/movie?api_key='.$movie_db_api_key.'&language=fr&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate');
+            $movies = $movies->toArray()['results'];
+        }
+
+        $movies_with_videos = [];
+        foreach ($movies as $key => $movie) {
+            // get movie video trailer
+            $videos = $httpClient->request('GET', $movie_db_url.'movie/'.$movie['id'].'/videos?api_key='.$movie_db_api_key.'&language=fr');
+            // $videos = $httpClient->request('GET', 'https://api.themoviedb.org/3/movie/278/videos?api_key=62fb5d2966faa3709e3278294cb6b086&language=fr');
+            if (isset($videos->toArray()['results'][0])) {
+                $movie['video_key'] = $videos->toArray()['results'][0]['key'];
+                $movie['video_name'] = $videos->toArray()['results'][0]['name'];
+            }
+            array_push($movies_with_videos, $movie);
         }
 
 
@@ -56,19 +76,7 @@ class MoviesController extends AbstractController
             'base_movie_url'      => $base_movie_url,
             'top_rated_movie'     => $top_rated_movie,
             'genders'             => $genders->toArray()['genres'],
-            'movies'             => $movies->toArray()['results']
+            'movies'             => $movies_with_videos
         ]);
-
-
-
-
-        // $httpClient = HttpClient::create();
-        // $response = $httpClient->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
-
-
-
-        // return $this->render('movies/index.html.twig', [
-        //     'controller_name' => 'MoviesController',
-        // ]);
     }
 }

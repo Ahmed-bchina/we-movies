@@ -35,7 +35,7 @@
             {# section search bar #}
             <div class="row">
                 <div class="col-md-6">
-                    <label for="site-search" style="border-bottom: 1px solid blue;">A propos de We Movies</label>
+                    <label for="site-search" style="border-bottom: 1px solid blue;"><strong>A propos de We Movies</strong></label>
                 </div>
                 
                 <div class="col-md-6">
@@ -53,16 +53,18 @@
 
             {# section first best movie #}
             <div class="row">
-                <div class="introtext">
-                    <a href="https://www.publiciscinemas.com/film/375426/" title="Voir la fiche du film Rosy">
-                        <img src='{{base_movie_url}}{{ top_rated_movie.poster_path }}' style="max-width:155px;" alt="Rosy" class=" left">
-                    </a>
-                    <h3>{{top_rated_movie.title}}</h3>
-                    {# <p class="fichefilm_evenement director_cast">Réalisé par <strong>{{top_rated_movie.overview}}</strong><br></p> #}
-                    <p class="fichefilm_evenement synopsis">{{top_rated_movie.overview}}
-                        <a href="https://www.publiciscinemas.com/film/375426/"> Voir la suite</a>
-                    </p>
-                    <div class="clr">&nbsp;</div>
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col-auto d-none d-lg-block">
+                        <a id="{{ top_rated_movie.title }}" data-id="{{ top_rated_movie.id }}" data-key='{% if top_rated_movie.video_key is defined %} {{top_rated_movie.video_key}} {% endif %}' class="btn-modal" href="#myModal" data-bs-toggle="modal" data-title="{{ top_rated_movie.title }}" data-overview="{{ top_rated_movie.overview }}" title="Voir la fiche du film">
+                            <img src='{{base_movie_url}}{{ top_rated_movie.poster_path }}' style="max-width:155px; margin-bottom:10px;" alt="Rosy" class=" left">
+                        </a>
+                    </div>
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h3 class="mb-0">{{ top_rated_movie.title }}</h3>
+                        <div class="mb-1 text-muted">{{top_rated_movie.release_date | date('Y')}}</div>
+                        <small><p class="mb-auto text-secondary">{{top_rated_movie.overview}}</p></small>
+                        {# <a href="#" class="stretched-link">Continue reading</a> #}
+                    </div>
                 </div>
             </div>
             <br><br>
@@ -84,39 +86,24 @@
                 </div>
                 <div class="col-md-8">
 
-    <div class="video card no_border">
-      <div class="wrapper" style="background-image: url('https://i.ytimg.com/vi/7kTJBmwr9-c/hqdefault.jpg');">
-        <a class="no_click play_trailer" href="https://www.themoviedb.org/video/play?key=Op_v2PHDn-0" data-site="YouTube" data-id="7kTJBmwr9-c" data-title="Being The Ricardos – Bande-annonce officielle VOST | Prime Video"><div class="play_background">rrrrrrrrrrr<span class="glyphicons_v2 play invert svg"></span></div></a>
-      </div>
-    </div>
-
-
                     {# list movies #}
                     {% for movie in movies %}
-                    <div class="row">
-                        <div class="introtext col-md-12">
-                            <div class="col-md-4">
-                                <a id="{{ movie.title }}" data-id="{{ movie.id }}" class="btn-modal" href="#myModal" data-bs-toggle="modal" data-title="{{ movie.title }}" data-overview="{{ movie.overview }}" title="Voir la fiche du film">
-                                    <img src='{{base_movie_url}}{{ movie.poster_path }}' style="max-width:155px; margin-bottom:10px;" alt="Rosy" class=" left">
-                                </a>
-                            </div>
-                            <div class="col-md-8">
-                                <p>{{movie.release_date | date('Y')}} <span style="color:blue;">- Disnay, Pixar</span></p>
-                                <p>{{movie.overview}}</p>
-                                {# <p class="fichefilm_evenement director_cast">Réalisé par <strong>{{top_rated_movie.overview}}</strong><br></p> #}
-                                <p class="fichefilm_evenement synopsis">{{movie.overview}}
-                                    <a href="https://www.publiciscinemas.com/film/375426/"> Voir la suite</a>
-                                </p>
-                                <div class="clr">&nbsp;</div>
-                            </div>
+                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col-auto d-none d-lg-block">
+                            <a id="{{ movie.title }}" data-id="{{ movie.id }}" data-key='{% if movie.video_key is defined %} {{movie.video_key}} {% endif %}' class="btn-modal" href="#myModal" data-bs-toggle="modal" data-title="{{ movie.title }}" data-overview="{{ movie.overview }}" title="Voir la fiche du film">
+                                <img src='{{base_movie_url}}{{ movie.poster_path }}' style="max-width:155px; margin-bottom:10px;" alt="Rosy" class=" left">
+                            </a>
+                        </div>
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <h3 class="mb-0">{{ movie.title }}</h3>
+                            <div class="mb-1 text-muted">{{movie.release_date | date('Y')}}</div>
+                            <small><p class="mb-auto text-secondary">{{movie.overview}}</p></small>
+                            {# <a href="#" class="stretched-link">Continue reading</a> #}
                         </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-
-                        {# <!-- Trigger the modal with a button -->
-            <button id="btn-modal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> #}
 
             <!-- Modal -->
             <div id="myModal" class="modal fade" tabindex="-1">
@@ -126,8 +113,13 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
+                            <div class="video card no_border">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" style="width: 100%; height: 260px;" src="" allowfullscreen></iframe>
+                                </div>
+                            </div>
                             <p class="modal-body-text"></p>
-                            <p class="text-secondary"><small>If you don't save, your changes will be lost.</small></p>
+                            <small><p class="text-secondary"></p></small>
                         </div>
                     </div>
                 </div>
@@ -174,7 +166,11 @@
                 id = $(this).data('id');
                 title = $(this).data('title');
                 overview = $(this).data('overview');
-                $('.modal-body').html(title + " <br><br> " + overview);
+                video_key = $(this).data('key');
+                video_url = 'https://www.youtube.com/embed/'+video_key.replace(/\s/g, '');
+                $('.modal-body-text').html(title);
+                $('.text-secondary').html(overview);
+                $('.embed-responsive-item').attr("src",video_url);
                 $('#myModal').modal('show');                
             });
         });
