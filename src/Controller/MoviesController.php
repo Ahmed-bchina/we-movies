@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +31,7 @@ class MoviesController extends AbstractController
 
             // get movies
             $movies = $httpClient->request('GET', $movie_db_url.'discover/movie?api_key='.$movie_db_api_key.'&language=fr&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate&with_genres='.$gender_name);
-            dump($movies);die;
+            return new JsonResponse($movies);
         }
 
         // get best movies (top rated movie)
