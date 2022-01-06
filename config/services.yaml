@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.THE_MOVIE_DB_API_KEY: '%env(THE_MOVIE_DB_API_KEY)%'
+    app.THE_MOVIE_DB_URL: '%env(THE_MOVIE_DB_URL)%'
+    app.BASE_MOVIE_URL: '%env(BASE_MOVIE_URL)%'
 
 services:
     # default configuration for services in *this* file
