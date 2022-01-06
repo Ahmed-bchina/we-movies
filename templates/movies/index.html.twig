@@ -3,31 +3,6 @@
 {% block title %}Hello MoviesController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    
-    
-    .input-group.md-form.form-sm.form-1 input{
-        border: 1px solid #bdbdbd;
-        border-top-right-radius: 0.25rem;
-        border-bottom-right-radius: 0.25rem;
-    }
-    .input-group.md-form.form-sm.form-2 input {
-        border: 1px solid #bdbdbd;
-        border-top-left-radius: 0.25rem;
-        border-bottom-left-radius: 0.25rem;
-    }
-    .input-group.md-form.form-sm.form-2 input.red-border {
-        border: 1px solid #ef9a9a;
-    }
-    .input-group.md-form.form-sm.form-2 input.lime-border {
-        border: 1px solid #cddc39;
-    }
-    .input-group.md-form.form-sm.form-2 input.amber-border {
-        border: 1px solid #ffca28;
-    }
-</style>
 
 <div class="example-wrapper">
     <div id="" class="row">
@@ -35,7 +10,7 @@
             {# section search bar #}
             <div class="row">
                 <div class="col-md-6">
-                    <label for="site-search" style="border-bottom: 1px solid blue;"><strong>A propos de We Movies</strong></label>
+                    <label for="site-search" class="a-propos"><strong>A propos de We Movies</strong></label>
                 </div>
                 
                 <div class="col-md-6">
@@ -56,7 +31,7 @@
                 <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col-auto d-none d-lg-block">
                         <a id="{{ top_rated_movie.title }}" data-id="{{ top_rated_movie.id }}" data-key='{% if top_rated_movie.video_key is defined %} {{top_rated_movie.video_key}} {% endif %}' class="btn-modal" href="#myModal" data-bs-toggle="modal" data-title="{{ top_rated_movie.title }}" data-overview="{{ top_rated_movie.overview }}" title="Voir la fiche du film">
-                            <img src='{{base_movie_url}}{{ top_rated_movie.poster_path }}' style="max-width:155px; margin-bottom:10px;" alt="Rosy" class=" left">
+                            <img src='{{base_movie_url}}{{ top_rated_movie.poster_path }}' class="custom-img" alt="Rosy" class=" left">
                         </a>
                     </div>
                     <div class="col p-4 d-flex flex-column position-static">
@@ -72,7 +47,7 @@
             {# section genders and list movies #}
             <div class="row">
                 <div class="col-md-4">
-                    <div style="border: 2px solid #9d9797; padding:30px;">
+                    <div class="genders">
                     {# list genders #}
                     {% for gender in genders %}
                         <div class="form-check">
@@ -91,7 +66,7 @@
                     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col-auto d-none d-lg-block">
                             <a id="{{ movie.title }}" data-id="{{ movie.id }}" data-key='{% if movie.video_key is defined %} {{movie.video_key}} {% endif %}' class="btn-modal" href="#myModal" data-bs-toggle="modal" data-title="{{ movie.title }}" data-overview="{{ movie.overview }}" title="Voir la fiche du film">
-                                <img src='{{base_movie_url}}{{ movie.poster_path }}' style="max-width:155px; margin-bottom:10px;" alt="Rosy" class=" left">
+                                <img src='{{base_movie_url}}{{ movie.poster_path }}' alt="Rosy" class="custom-img left">
                             </a>
                         </div>
                         <div class="col p-4 d-flex flex-column position-static">
@@ -109,13 +84,13 @@
             <div id="myModal" class="modal fade" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header" style="border-bottom:none">
+                        <div class="modal-header custom-modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
                             <div class="video card no_border">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" style="width: 100%; height: 260px;" src="" allowfullscreen></iframe>
+                                    <iframe class="embed-responsive-item custom-video" src="" allowfullscreen></iframe>
                                 </div>
                             </div>
                             <p class="modal-body-text"></p>
